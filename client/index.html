@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Collaborative Canvas | Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="app-bg"></div>
+  <div class="container">
+    <header class="header">
+      <div class="logo">
+        <div class="logo-icon">
+          <i data-lucide="palette"></i>
+        </div>
+        <h1>Canvas<span>Pro</span></h1>
+      </div>
+      <div class="header-controls">
+        <div id="activeRoomInfo" class="active-room-info hidden">
+          <i data-lucide="hash"></i>
+          <span id="activeRoomName">Not Joined</span>
+          <button id="exitBtn" class="btn-exit" title="Exit Room">
+            <i data-lucide="log-out"></i>
+          </button>
+        </div>
+        <div id="connectionStatus" class="connection-status disconnected">
+          <div class="status-dot"></div>
+          <span>Offline</span>
+        </div>
+      </div>
+    </header>
+
+    <main class="main-content">
+      <aside class="sidebar">
+        <div class="panel">
+          <h3>Tools</h3>
+          <div class="tool-group">
+            <button id="brushTool" class="tool-btn active" title="Brush Tool">
+              <i data-lucide="pencil"></i>
+            </button>
+            <button id="eraserTool" class="tool-btn" title="Eraser Tool">
+              <i data-lucide="eraser"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Colors</h3>
+          <div class="color-picker-container">
+            <input type="color" id="colorPicker" value="#3b82f6" class="color-input" />
+            <div class="color-display" id="colorDisplay" style="background-color: #3b82f6">#3B82F6</div>
+          </div>
+          <div class="preset-colors">
+            <button class="color-preset" style="background-color: #3b82f6" data-color="#3b82f6"></button>
+            <button class="color-preset" style="background-color: #ef4444" data-color="#ef4444"></button>
+            <button class="color-preset" style="background-color: #10b981" data-color="#10b981"></button>
+            <button class="color-preset" style="background-color: #f59e0b" data-color="#f59e0b"></button>
+            <button class="color-preset" style="background-color: #8b5cf6" data-color="#8b5cf6"></button>
+            <button class="color-preset" style="background-color: #ffffff" data-color="#ffffff"></button>
+            <button class="color-preset" style="background-color: #000000" data-color="#000000"></button>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>Stroke Size</h3>
+          <div class="range-wrapper">
+            <input type="range" id="strokeWidthSlider" min="1" max="50" value="3" class="slider" />
+            <span id="widthDisplay">3px</span>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h3>History</h3>
+          <div class="action-grid">
+            <button id="undoBtn" class="btn btn-glass" title="Undo">
+              <i data-lucide="undo-2"></i>
+            </button>
+            <button id="redoBtn" class="btn btn-glass" title="Redo">
+              <i data-lucide="redo-2"></i>
+            </button>
+          </div>
+          <button id="clearBtn" class="btn btn-danger-glass full-width">
+            <i data-lucide="trash-2"></i>
+            <span>Clear Canvas</span>
+          </button>
+        </div>
+
+        <div class="panel users-panel">
+          <h3>Live Users</h3>
+          <div id="usersList" class="users-list">
+            <div class="empty-users">No one active</div>
+          </div>
+        </div>
+      </aside>
+
+      <section class="canvas-parent">
+        <div class="canvas-container">
+          <canvas id="canvas"></canvas>
+          <div id="cursorsLayer" class="cursors-layer"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Room Join Modal -->
+  <div id="roomModal" class="modal-overlay">
+    <div class="modal-content glass">
+      <div class="modal-header">
+        <div class="logo-icon scale-150">
+          <i data-lucide="palette"></i>
+        </div>
+        <h2>Welcome to CanvasPro</h2>
+        <p>Start collaborating in real-time</p>
+      </div>
+
+      <div class="modal-body">
+        <div class="input-container">
+          <label for="nameInputModal">Your Name</label>
+          <div class="input-wrapper">
+            <i data-lucide="user"></i>
+            <input type="text" id="nameInputModal" placeholder="e.g. Alex" />
+          </div>
+        </div>
+
+        <div class="input-container">
+          <label for="roomInputModal">Enter Room ID</label>
+          <div class="input-wrapper">
+            <i data-lucide="hash"></i>
+            <input type="text" id="roomInputModal" placeholder="e.g. 12" />
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button id="joinBtnModal" class="btn btn-primary full-width">
+            <i data-lucide="log-in"></i>
+            <span>Join Room</span>
+          </button>
+          <div class="divider"><span>OR</span></div>
+          <button id="createBtnModal" class="btn btn-glass full-width">
+            <i data-lucide="plus-circle"></i>
+            <span>Create New Room</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script src="canvas.js"></script>
+  <script src="websocket.js"></script>
+  <script src="main.js"></script>
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // Add UI listener for color change to update display
+    document.getElementById('colorPicker').addEventListener('input', (e) => {
+      document.getElementById('colorDisplay').style.backgroundColor = e.target.value;
+    });
+
+    // Update color display on preset click
+    document.querySelectorAll('.color-preset').forEach(preset => {
+      preset.addEventListener('click', () => {
+        document.getElementById('colorDisplay').style.backgroundColor = preset.dataset.color;
+      });
+    });
+  </script>
+</body>
+
+</html>
