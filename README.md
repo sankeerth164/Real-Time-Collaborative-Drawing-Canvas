@@ -130,16 +130,23 @@ http://localhost:3000
 7. **Clear Canvas**: Clear all drawings from the canvas
 8. **View Users**: See who's currently drawing in the room
 
+
 ## Time Spent
 
-- Project Planning & Architecture: 30 minutes
-- Backend Implementation (Server, Room Manager, Drawing State): 45 minutes
-- Frontend Implementation (HTML, CSS, Canvas): 60 minutes
-- WebSocket Integration: 45 minutes
-- Testing & Bug Fixes: 30 minutes
-- Documentation: 30 minutes
+- **Day 1: Planning & Foundation** (~5 hours)
+  - Requirement Analysis & Architecture Design: 1.5 hours
+  - Project Setup & Initial Layout (HTML/CSS): 1.5 hours
+  - Basic Node.js & WebSocket Server Implementation: 2 hours
+- **Day 2: Core Synchronization & Real-time Features** (~7 hours)
+  - Raw HTML5 Canvas API Implementation (Brush/Eraser): 2 hours
+  - Real-time Drawing Sync & Room Management: 3 hours
+  - Remote Cursor Tracking & User Presence: 2 hours
+- **Day 3: Advanced Logic & Final Polish** (~6 hours)
+  - Complex Global Undo/Redo Strategy & Implementation: 3 hours
+  - Performance Optimization & Lag Mitigation: 1.5 hours
+  - Final Documentation (README/ARCHITECTURE) & Testing: 1.5 hours
 
-**Total: ~4 hours**
+**Total Time Spent: ~18 hours over 3 days**
 
 ## Future Enhancements
 

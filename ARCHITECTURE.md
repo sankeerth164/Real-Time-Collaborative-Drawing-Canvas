@@ -62,8 +62,8 @@ The Collaborative Canvas is a real-time multi-user drawing application built wit
 │         │  DrawingState (drawing-state.js)│                      │
 │         │  (Per Room)                     │                      │
 │         │                                 │                      │
-│         │  • strokes: Map<id, stroke>     │                      │
-│         │  • strokeHistory: Array         │                      │
+│         │  • activeStrokes: Map<id, stroke>  │                      │
+│         │  • history: Array               │                      │
 │         │  • historyIndex: Number         │                      │
 │         │                                 │                      │
 │         └─────────────────────────────────┘                      │
@@ -255,6 +255,7 @@ Broadcast cursor position of other users
 {
   "type": "CURSOR_MOVE",
   "userId": "user-1",
+  "userName": "Alex",
   "x": 100,
   "y": 150,
   "userColor": "#FF6B6B"
